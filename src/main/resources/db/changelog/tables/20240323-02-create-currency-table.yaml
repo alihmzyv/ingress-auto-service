@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20240323-02
+      author: ali
+      changes:
+        - createTable:
+            tableName: currency
+            columns:
+              - column:
+                  autoIncrement: true
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar
+                  constraints:
+                    unique: true
+                    nullable: false

@@ -1,0 +1,156 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20240323-05
+      author: ali
+      changes:
+        - createTable:
+            tableName: ads
+            columns:
+              - column:
+                  autoIncrement: true
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: model_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: ads_model__fk
+                    references: model(id)
+                    nullable: false
+              - column:
+                  name: fuel_type_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: ads_fuel_type__fk
+                    references: fuel_type(id)
+                    nullable: false
+              - column:
+                  name: drive_unit_type_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: ads_drive_unit__fk
+                    references: drive_unit_type(id)
+                    nullable: false
+              - column:
+                  name: body_style_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: ads_body_style__fk
+                    references: body_style(id)
+                    nullable: false
+              - column:
+                  name: mileage
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: mileage_type
+                  type: numeric(2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: year
+                  type: smallint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: color_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: ads_color__fk
+                    references: color(id)
+                    nullable: false
+              - column:
+                  name: engine_capacity_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: ads_engine_capacity__fk
+                    references: engine_capacity(id)
+                    nullable: false
+              - column:
+                  name: price_val
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price_currency_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: ads_currency__fk
+                    references: currency(id)
+                    nullable: false
+              - column:
+                  name: engine_power_in_hp
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ownership_history_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: ads_ownership_history__fk
+                    references: ownership_history(id)
+              - column:
+                  name: market_version
+                  type: bigint
+                  constraints:
+                    foreignKeyName: ads_market_version__fk
+                    references: market_version(id)
+              - column:
+                  name: transmission_type
+                  type: bigint
+                  constraints:
+                    foreignKeyName: ads_transmission_type__fk
+                    references: transmission_type(id)
+                    nullable: false
+              - column:
+                  name: damaged
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: painted
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: crashed_or_for_spare_parts
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: num_of_seats
+                  type: smallint
+              - column:
+                  name: eligible_for_loan
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: eligible_for_barter
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: vin_code
+                  type: varchar
+              - column:
+                  name: extra_info
+                  type: text
+              - column:
+                  name: name_of_seller
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: ads_city__fk
+                    references: city(id)
+              - column:
+                  name: email_address_of_seller
+                  type: varchar
+                  constraints:
+                    nullable: false
+
+
+

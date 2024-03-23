@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20240323-03
+      author: ali
+      changes:
+        - createTable:
+            tableName: account
+            columns:
+              - column:
+                  autoIncrement: true
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: phone_number
+                  type: varchar(10)
+                  remarks: Phone number in format 055 000 00 00
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email_address
+                  type: varchar
+                  constraints:
+                    unique: true
