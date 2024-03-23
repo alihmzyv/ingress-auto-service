@@ -18,3 +18,7 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     nullable: false
+        - loadData:
+            file: ../data/currency.csv
+            relativeToChangelogFile: true
+            tableName: currency

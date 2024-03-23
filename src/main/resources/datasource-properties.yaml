@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${AUTO_DB_IP:localhost}:${AUTO_DB_PORT:5432}/auto_db
+    username: ${AUTO_DB_USERNAME:service}
+    password: ${AUTO_DB_PASSWORD:password}

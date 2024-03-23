@@ -18,3 +18,7 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     nullable: false
+        - loadData:
+            file: ../data/city.csv
+            relativeToChangelogFile: true
+            tableName: city
