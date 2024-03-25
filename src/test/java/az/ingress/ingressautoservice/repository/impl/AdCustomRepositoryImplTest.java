@@ -26,6 +26,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -3383,5 +3385,258 @@ class AdCustomRepositoryImplTest {
                 .build();
         List<AdShortResponseDto> expectedAds = List.of(expectedAd2, expectedAd3, expectedAd1);
         assertEquals(expectedAds, actualAds);
+    }
+
+    @Test
+    void whenThereAreAdsThenPaginationShouldBeWorking() {
+        Account account = sessionFactory.fromTransaction(session -> {
+            Account accountToPersist = Account.builder()
+                    .phoneNumber("0559994650")
+                    .password("12345")
+                    .emailAddress("alihmzyv@gmail.com")
+                    .build();
+            session.persist(accountToPersist);
+            return accountToPersist;
+        });
+        Model model = Model.builder()
+                .id(1L)
+                .build();
+        FuelType fuelType = FuelType.builder()
+                .id(1L)
+                .build();
+        DriveUnitType driveUnitType = DriveUnitType.builder()
+                .id(1L)
+                .build();
+        BodyStyle bodyStyle = BodyStyle.builder()
+                .id(1L)
+                .build();
+        Long mileage1 = 10000L;
+        Short year1 = 2010;
+        Color color = Color.builder()
+                .id(1L)
+                .build();
+        EngineCapacity engineCapacity = EngineCapacity.builder()
+                .id(1L)
+                .build();
+        Long enginePowerInHp = 750L;
+        OwnershipHistory ownershipHistory = OwnershipHistory.builder()
+                .id(1L)
+                .build();
+        MarketVersion marketVersion = MarketVersion.builder()
+                .id(1L)
+                .build();
+        TransmissionType transmissionType = TransmissionType.builder()
+                .id(1L)
+                .build();
+        boolean damaged = true;
+        boolean painted = false;
+        Short numOfSeats = 5;
+        String vinCode = "1212121";
+        String extraInfo = "please buy this";
+        Long priceVal1 = 10000L;
+        Currency currency1 = Currency.builder()
+                .id(1L)
+                .build();
+        boolean eligibleForLoan1 = true;
+        boolean eligibleForBarter1 = false;
+        String nameOfSeller = "Ali";
+        City city = City.builder()
+                .id(1L)
+                .build();
+        String emailAddressOfSeller = "alihmzyv@gmail.com";
+        CarDetails carDetails = CarDetails.builder()
+                .model(model)
+                .fuelType(fuelType)
+                .driveUnitType(driveUnitType)
+                .bodyStyle(bodyStyle)
+                .mileage(mileage1)
+                .yearOfCar(year1)
+                .color(color)
+                .engineCapacity(engineCapacity)
+                .enginePowerInHp(enginePowerInHp)
+                .ownershipHistory(ownershipHistory)
+                .marketVersion(marketVersion)
+                .transmissionType(transmissionType)
+                .damaged(damaged)
+                .painted(painted)
+                .numOfSeats(numOfSeats)
+                .vinCode(vinCode)
+                .extraInfo(extraInfo)
+                .build();
+        Ad ad1 = Ad.builder()
+                .carDetails(carDetails)
+                .priceVal(priceVal1)
+                .priceCurrency(currency1)
+                .eligibleForLoan(eligibleForLoan1)
+                .eligibleForBarter(eligibleForBarter1)
+                .nameOfSeller(nameOfSeller)
+                .city(city)
+                .emailAddressOfSeller(emailAddressOfSeller)
+                .account(account)
+                .build();
+        Model model2 = Model.builder()
+                .id(3L)
+                .build();
+        City city2 = City.builder()
+                .id(2L)
+                .build();
+        Long mileage2 = 20000L;
+        Short year2 = 2024;
+        CarDetails carDetails2 = CarDetails.builder()
+                .model(model2)
+                .fuelType(fuelType)
+                .driveUnitType(driveUnitType)
+                .bodyStyle(bodyStyle)
+                .mileage(mileage2)
+                .yearOfCar(year2)
+                .color(color)
+                .engineCapacity(engineCapacity)
+                .enginePowerInHp(enginePowerInHp)
+                .ownershipHistory(ownershipHistory)
+                .marketVersion(marketVersion)
+                .transmissionType(transmissionType)
+                .damaged(damaged)
+                .painted(painted)
+                .numOfSeats(numOfSeats)
+                .vinCode(vinCode)
+                .extraInfo(extraInfo)
+                .build();
+        Long priceVal2 = 5000L;
+        Currency currency2 = Currency.builder()
+                .id(2L)
+                .build();
+        boolean eligibleForLoan2 = true;
+        boolean eligibleForBarter2 = false;
+        Ad ad2 = Ad.builder()
+                .carDetails(carDetails2)
+                .priceVal(priceVal2)
+                .priceCurrency(currency2)
+                .eligibleForLoan(eligibleForLoan2)
+                .eligibleForBarter(eligibleForBarter2)
+                .nameOfSeller(nameOfSeller)
+                .city(city2)
+                .emailAddressOfSeller(emailAddressOfSeller)
+                .account(account)
+                .build();
+
+        Model model3 = Model.builder()
+                .id(8L)
+                .build();
+        City city3 = City.builder()
+                .id(2L)
+                .build();
+        Long mileage3 = 15000L;
+        Short year3 = 2023;
+        CarDetails carDetails3 = CarDetails.builder()
+                .model(model3)
+                .fuelType(fuelType)
+                .driveUnitType(driveUnitType)
+                .bodyStyle(bodyStyle)
+                .mileage(mileage3)
+                .yearOfCar(year3)
+                .color(color)
+                .engineCapacity(engineCapacity)
+                .enginePowerInHp(enginePowerInHp)
+                .ownershipHistory(ownershipHistory)
+                .marketVersion(marketVersion)
+                .transmissionType(transmissionType)
+                .damaged(damaged)
+                .painted(painted)
+                .numOfSeats(numOfSeats)
+                .vinCode(vinCode)
+                .extraInfo(extraInfo)
+                .build();
+        Currency currency3 = Currency.builder()
+                .id(2L)
+                .build();
+        boolean eligibleForLoan3 = true;
+        boolean eligibleForBarter3 = true;
+        Long priceVal3 = 30000L;
+        Ad ad3 = Ad.builder()
+                .carDetails(carDetails3)
+                .priceVal(priceVal3)
+                .priceCurrency(currency3)
+                .eligibleForLoan(eligibleForLoan3)
+                .eligibleForBarter(eligibleForBarter3)
+                .nameOfSeller(nameOfSeller)
+                .city(city3)
+                .emailAddressOfSeller(emailAddressOfSeller)
+                .account(account)
+                .build();
+        IntStream.rangeClosed(1, 10)
+                .forEach(val -> {
+                    ad1.setId(null);
+                    sessionFactory.inTransaction(
+                            session -> session.persist(ad1)
+                    );
+                });
+        IntStream.rangeClosed(1, 10)
+                .forEach(val -> {
+                    ad2.setId(null);
+                    sessionFactory.inTransaction(
+                            session -> session.persist(ad2)
+                    );
+                });
+        IntStream.rangeClosed(1, 10)
+                .forEach(val -> {
+                    ad3.setId(null);
+                    sessionFactory.inTransaction(
+                            session -> session.persist(ad3)
+                    );
+                });
+        FindAdsRequestParams requestParams = FindAdsRequestParams.builder()
+                .build();
+        PageRequest pageRequest = PageRequest.of(0,
+                24,
+                Sort.by(Sort.Order.desc(String.join(".", Ad_.CREATED_AT))));
+        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, pageRequest);
+        assertNotNull(actualAds);
+        AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
+                .id(ad1.getId())
+                .price(priceVal1)
+                .currencyName("AZE")
+                .brandName("Aston Martin")
+                .modelName("DB9")
+                .year(year1)
+                .capacityInSm3((short) 50)
+                .mileage(mileage1)
+                .cityName("Baku")
+                .createdAt(ad1.getCreatedAt())
+                .build();
+        AdShortResponseDto expectedAd2 = AdShortResponseDto.builder()
+                .id(ad2.getId())
+                .price(priceVal2)
+                .currencyName("USD")
+                .brandName("Audi")
+                .modelName("100")
+                .year(year2)
+                .capacityInSm3((short) 50)
+                .mileage(mileage2)
+                .cityName("Absheron")
+                .createdAt(ad2.getCreatedAt())
+                .build();
+        AdShortResponseDto expectedAd3 = AdShortResponseDto.builder()
+                .id(ad3.getId())
+                .price(priceVal3)
+                .currencyName("USD")
+                .brandName("Bentley")
+                .modelName("Bentayga")
+                .year(year3)
+                .capacityInSm3((short) 50)
+                .mileage(mileage3)
+                .cityName("Absheron")
+                .createdAt(ad3.getCreatedAt())
+                .build();
+        List<AdShortResponseDto> expectedAds = Stream.of(Stream.generate(() -> expectedAd3)
+                                .limit(10),
+                        Stream.generate(() -> expectedAd2)
+                                .limit(10),
+                        Stream.generate(() -> expectedAd1)
+                                .limit(4))
+                .flatMap(stream -> stream)
+                .toList();
+        assertThat(actualAds)
+                .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id", "createdAt", "updatedAt")
+                .isEqualTo(expectedAds);
     }
 }

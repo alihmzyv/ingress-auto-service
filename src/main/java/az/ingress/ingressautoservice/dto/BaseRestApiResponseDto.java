@@ -15,6 +15,13 @@ public class BaseRestApiResponseDto<D> {
         return dto;
     }
 
+    public static <D> BaseRestApiResponseDto<D> of(D data, int totalNumOfPages) {
+        BaseRestApiResponseDto<D> dto = new BaseRestApiResponseDto<>();
+        dto.setData(data);
+        dto.setTotalNumOfPages(totalNumOfPages);
+        return dto;
+    }
+
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
     private static class Error {
@@ -24,6 +31,7 @@ public class BaseRestApiResponseDto<D> {
 
     D data;
     List<Error> errors;
+    int totalNumOfPages;
 
     private BaseRestApiResponseDto() {
     }
