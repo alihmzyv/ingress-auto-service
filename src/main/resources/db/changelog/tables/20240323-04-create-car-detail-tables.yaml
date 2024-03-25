@@ -9,7 +9,7 @@ databaseChangeLog:
               - column:
                   autoIncrement: true
                   name: id
-                  type: bigint
+                  type: bigserial
                   constraints:
                     primaryKey: true
               - column:
@@ -18,6 +18,11 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     nullable: false
+        - loadData:
+            file: ../data/brand.csv
+            relativeToChangelogFile: true
+            tableName: brand
+
 
         - createTable:
             tableName: model
@@ -25,7 +30,7 @@ databaseChangeLog:
               - column:
                   autoIncrement: true
                   name: id
-                  type: bigint
+                  type: bigserial
                   constraints:
                     primaryKey: true
               - column:
@@ -41,6 +46,10 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: model_brand__fk
                     references: brand(id)
+        - loadData:
+            file: ../data/model.csv
+            relativeToChangelogFile: true
+            tableName: model
 
         - createTable:
             tableName: fuel_type
@@ -48,7 +57,7 @@ databaseChangeLog:
               - column:
                   autoIncrement: true
                   name: id
-                  type: bigint
+                  type: bigserial
                   constraints:
                     primaryKey: true
               - column:
@@ -57,6 +66,10 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     nullable: false
+        - loadData:
+            file: ../data/fuel_type.csv
+            relativeToChangelogFile: true
+            tableName: fuel_type
 
         - createTable:
             tableName: body_style
@@ -64,7 +77,7 @@ databaseChangeLog:
               - column:
                   autoIncrement: true
                   name: id
-                  type: bigint
+                  type: bigserial
                   constraints:
                     primaryKey: true
               - column:
@@ -73,6 +86,10 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     nullable: false
+        - loadData:
+            file: ../data/body_style.csv
+            relativeToChangelogFile: true
+            tableName: body_style
 
 
         - createTable:
@@ -81,7 +98,7 @@ databaseChangeLog:
               - column:
                   autoIncrement: true
                   name: id
-                  type: bigint
+                  type: bigserial
                   constraints:
                     primaryKey: true
               - column:
@@ -90,6 +107,10 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     nullable: false
+        - loadData:
+            file: ../data/drive_unit_type.csv
+            relativeToChangelogFile: true
+            tableName: drive_unit_type
 
 
         - createTable:
@@ -98,7 +119,7 @@ databaseChangeLog:
               - column:
                   autoIncrement: true
                   name: id
-                  type: bigint
+                  type: bigserial
                   constraints:
                     primaryKey: true
               - column:
@@ -107,6 +128,10 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     nullable: false
+        - loadData:
+            file: ../data/transmission_type.csv
+            relativeToChangelogFile: true
+            tableName: transmission_type
 
 
         - createTable:
@@ -115,7 +140,7 @@ databaseChangeLog:
               - column:
                   autoIncrement: true
                   name: id
-                  type: bigint
+                  type: bigserial
                   constraints:
                     primaryKey: true
               - column:
@@ -124,6 +149,11 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     nullable: false
+        - loadData:
+            file: ../data/color.csv
+            relativeToChangelogFile: true
+            tableName: color
+
 
 
         - createTable:
@@ -132,15 +162,20 @@ databaseChangeLog:
               - column:
                   autoIncrement: true
                   name: id
-                  type: bigint
+                  type: bigserial
                   constraints:
                     primaryKey: true
               - column:
                   name: capacity_in_sm3
-                  type: varchar
+                  type: smallint
                   constraints:
                     unique: true
                     nullable: false
+        - loadData:
+            file: ../data/engine_capacity.csv
+            relativeToChangelogFile: true
+            tableName: engine_capacity
+
 
         - createTable:
             tableName: ownership_history
@@ -148,7 +183,7 @@ databaseChangeLog:
               - column:
                   autoIncrement: true
                   name: id
-                  type: bigint
+                  type: bigserial
                   constraints:
                     primaryKey: true
               - column:
@@ -157,6 +192,10 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     nullable: false
+        - loadData:
+            file: ../data/ownership_history.csv
+            relativeToChangelogFile: true
+            tableName: ownership_history
 
         - createTable:
             tableName: market_version
@@ -164,7 +203,7 @@ databaseChangeLog:
               - column:
                   autoIncrement: true
                   name: id
-                  type: bigint
+                  type: bigserial
                   constraints:
                     primaryKey: true
               - column:
@@ -173,3 +212,7 @@ databaseChangeLog:
                   constraints:
                     unique: true
                     nullable: false
+        - loadData:
+            file: ../data/market_version.csv
+            relativeToChangelogFile: true
+            tableName: market_version

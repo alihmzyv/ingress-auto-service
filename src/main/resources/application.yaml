@@ -5,3 +5,4 @@ spring:
     import:
       - classpath:liquibase-properties.yaml
       - classpath:datasource-properties.yaml
+      - classpath:hibernate-properties.yaml
