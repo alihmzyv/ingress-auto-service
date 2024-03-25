@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @MappedSuperclass
-public class SimpleProperty extends RootIdentifiable {
+public class SimpleProperty extends BaseEntity {
     @NotNull
     @Column(nullable = false, unique = true)
     String name;

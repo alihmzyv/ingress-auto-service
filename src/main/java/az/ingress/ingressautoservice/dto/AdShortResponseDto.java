@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.time.Instant;
+
 @Builder
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -18,5 +20,5 @@ public class AdShortResponseDto {
     Short capacityInSm3;
     Long mileage;
     String cityName;
-//    Instant createdAt;
+    Instant createdAt;
 }

@@ -1,6 +1,6 @@
 package az.ingress.ingressautoservice.entity;
 
-import az.ingress.ingressautoservice.entity.helper.RootIdentifiable;
+import az.ingress.ingressautoservice.entity.helper.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +16,7 @@ import java.util.Set;
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class Account extends RootIdentifiable {
+public class Account extends BaseEntity {
 
     @Size(max = 10)
     @NotNull
@@ -27,6 +27,6 @@ public class Account extends RootIdentifiable {
 
     String emailAddress;
 
-    @OneToMany(mappedBy = Ads_.ACCOUNT)
-    Set<Ads> ads;
+    @OneToMany(mappedBy = Ad_.ACCOUNT)
+    Set<Ad> ads;
 }

@@ -1,4 +1,4 @@
-package az.ingress.ingressautoservice.entity.adsdetails;
+package az.ingress.ingressautoservice.entity.addetails;
 
 import az.ingress.ingressautoservice.entity.helper.SimpleProperty;
 import jakarta.persistence.Entity;

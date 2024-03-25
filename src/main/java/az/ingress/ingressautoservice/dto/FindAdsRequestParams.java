@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class FindAddsRequestParams {
+public class FindAdsRequestParams {
     public enum MileageType {
         ALL,
         NEW,
@@ -35,5 +35,5 @@ public class FindAddsRequestParams {
     List<Long> bodyStyleIds;
     Byte minYear;
     Byte maxYear;
-    MileageType mileageType = MileageType.ALL;
+    MileageType mileageType;
 }

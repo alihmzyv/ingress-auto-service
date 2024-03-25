@@ -21,7 +21,7 @@ databaseChangeLog:
       author: ali
       changes:
         - createTable:
-            tableName: ads
+            tableName: ad
             columns:
               - column:
                   autoIncrement: true
@@ -170,18 +170,18 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: ads_account__fk
                     references: account(id)
-#              - column:
-#                  name: created_at
-#                  type: timestamp
-#                  constraints:
-#                    nullable: false
-#                  defaultValueComputed: ${now}
-#              - column:
-#                  name: updated_at
-#                  type: timestamp
-#                  constraints:
-#                    nullable: false
-#                  defaultValueComputed: ${now}
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: ${now}
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: ${now}
 
 
 

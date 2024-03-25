@@ -1,6 +1,6 @@
 package az.ingress.ingressautoservice.entity.cardetails;
 
-import az.ingress.ingressautoservice.entity.helper.RootIdentifiable;
+import az.ingress.ingressautoservice.entity.helper.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class EngineCapacity extends RootIdentifiable {
+public class EngineCapacity extends BaseEntity {
 
     @NotNull
     @Column(nullable = false, unique = true)

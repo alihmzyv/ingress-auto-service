@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @MappedSuperclass
-public class RootIdentifiable {
+public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -25,7 +25,7 @@ public class RootIdentifiable {
         if (this == o) return true;
         if (!(o.getClass().equals(this.getClass())))
             return false;
-        RootIdentifiable other = (RootIdentifiable) o;
+        BaseEntity other = (BaseEntity) o;
         return id != null &&
                 id.equals(other.getId());
     }

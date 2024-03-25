@@ -1,9 +1,10 @@
 package az.ingress.ingressautoservice.entity;
 
-import az.ingress.ingressautoservice.entity.adsdetails.City;
-import az.ingress.ingressautoservice.entity.adsdetails.Currency;
+import az.ingress.ingressautoservice.entity.addetails.City;
+import az.ingress.ingressautoservice.entity.addetails.Currency;
+import az.ingress.ingressautoservice.entity.helper.BaseEntity;
 import az.ingress.ingressautoservice.entity.helper.CarDetails;
-import az.ingress.ingressautoservice.entity.helper.RootIdentifiable;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
@@ -11,6 +12,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Generated;
+import org.hibernate.generator.EventType;
+
+import java.time.Instant;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,11 +24,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-//TODO: rename
-public class Ads extends RootIdentifiable {
-    /**
-     * java.lang.Long, java.lang.Long, java.lang.String, java.lang.String, java.lang.String, java.lang.Short, java.lang.Short, java.lang.Long, java.lang.String, java.time.Instant
-     */
+public class Ad extends BaseEntity {
     CarDetails carDetails;
 
     @NotNull
@@ -51,11 +52,11 @@ public class Ads extends RootIdentifiable {
     @ManyToOne(fetch = FetchType.LAZY)
     Account account;
 
-    //FIXME
+    @Column(nullable = false)
+    @Generated(event = EventType.INSERT)
+    Instant createdAt;
 
-//    @Column(insertable = false, nullable = false)
-//    Instant createdAt;
-//
-//    @Column(insertable = false, nullable = false)
-//    Instant updatedAt;
+    @Column(nullable = false, insertable = false)
+    @Generated(event = EventType.INSERT)
+    Instant updatedAt;
 }

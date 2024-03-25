@@ -1,19 +1,18 @@
 package az.ingress.ingressautoservice.repository.impl;
 
 import az.ingress.ingressautoservice.dto.AdShortResponseDto;
-import az.ingress.ingressautoservice.dto.FindAddsRequestParams;
+import az.ingress.ingressautoservice.dto.FindAdsRequestParams;
 import az.ingress.ingressautoservice.entity.Account;
-import az.ingress.ingressautoservice.entity.Ads;
-import az.ingress.ingressautoservice.entity.adsdetails.City;
-import az.ingress.ingressautoservice.entity.adsdetails.Currency;
+import az.ingress.ingressautoservice.entity.Ad;
+import az.ingress.ingressautoservice.entity.addetails.City;
+import az.ingress.ingressautoservice.entity.addetails.Currency;
 import az.ingress.ingressautoservice.entity.cardetails.*;
 import az.ingress.ingressautoservice.entity.helper.CarDetails;
-import az.ingress.ingressautoservice.repository.AddsCustomRepository;
+import az.ingress.ingressautoservice.repository.AdsCustomRepository;
 import jakarta.persistence.PersistenceUnit;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -21,7 +20,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,34 +28,31 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
-class AddsCustomRepositoryImplTest {
+class AdsCustomRepositoryImplTest {
     @PersistenceUnit
     private SessionFactory sessionFactory;
     @Autowired
-    private AddsCustomRepository addsCustomRepository;
-    private Account account;
-
-    @BeforeEach
-    void setUp() {
-        AtomicReference<Account> accountRef = new AtomicReference<>();
-        sessionFactory.inTransaction(session -> {
-            accountRef.set(Account.builder()
-                    .phoneNumber("0559994650")
-                    .password("12345")
-                    .emailAddress("alihmzyv@gmail.com")
-                    .build());
-            session.persist(accountRef.get());
-        });
-        account = accountRef.get();
-    }
+    private AdsCustomRepository adsCustomRepository;
 
     @AfterEach
     void clean() {
-        sessionFactory.getSchemaManager().truncateMappedObjects();
+        sessionFactory.inTransaction(session -> {
+            session.createNativeMutationQuery("delete from ad").executeUpdate();
+            session.createNativeMutationQuery("delete from account").executeUpdate();
+        });
     }
 
     @Test
     void whenSavedAdsThenShouldExist() {
+        Account account = sessionFactory.fromTransaction(session -> {
+            Account accountToPersist = Account.builder()
+                    .phoneNumber("0559994650")
+                    .password("12345")
+                    .emailAddress("alihmzyv@gmail.com")
+                    .build();
+            session.persist(accountToPersist);
+            return accountToPersist;
+        });
         Model model = Model.builder()
                 .id(1L)
                 .build();
@@ -122,7 +117,7 @@ class AddsCustomRepositoryImplTest {
                 .vinCode(vinCode)
                 .extraInfo(extraInfo)
                 .build();
-        Ads ads = Ads.builder()
+        Ad ad = Ad.builder()
                 .carDetails(carDetails)
                 .priceVal(priceVal)
                 .priceCurrency(currency)
@@ -133,19 +128,28 @@ class AddsCustomRepositoryImplTest {
                 .emailAddressOfSeller(emailAddressOfSeller)
                 .account(account)
                 .build();
-        Ads adsSaved = addsCustomRepository.save(ads);
-        assertThat(adsSaved)
+        Ad adSaved = adsCustomRepository.save(ad);
+        assertThat(adSaved)
                 .usingRecursiveComparison(RecursiveComparisonConfiguration.builder()
                         .withIgnoreAllExpectedNullFields(true)
                         .build());
-        assertNotNull(adsSaved.getId());
+        assertNotNull(adSaved.getId());
         sessionFactory.inSession(session ->
-                assertEquals(adsSaved, session.find(Ads.class, adsSaved.getId()))
+                assertEquals(adSaved, session.find(Ad.class, adSaved.getId()))
         );
     }
 
     @Test
     void whenThereAreAdsThenAdsShouldBeAbleToBeFoundByBrand() {
+        Account account = sessionFactory.fromTransaction(session -> {
+            Account accountToPersist = Account.builder()
+                    .phoneNumber("0559994650")
+                    .password("12345")
+                    .emailAddress("alihmzyv@gmail.com")
+                    .build();
+            session.persist(accountToPersist);
+            return accountToPersist;
+        });
         Model model = Model.builder()
                 .id(1L)
                 .build();
@@ -210,7 +214,7 @@ class AddsCustomRepositoryImplTest {
                 .vinCode(vinCode)
                 .extraInfo(extraInfo)
                 .build();
-        Ads ads1 = Ads.builder()
+        Ad ad1 = Ad.builder()
                 .carDetails(carDetails)
                 .priceVal(priceVal)
                 .priceCurrency(currency)
@@ -243,7 +247,7 @@ class AddsCustomRepositoryImplTest {
                 .vinCode(vinCode)
                 .extraInfo(extraInfo)
                 .build();
-        Ads ads2 = Ads.builder()
+        Ad ad2 = Ad.builder()
                 .carDetails(carDetails2)
                 .priceVal(priceVal)
                 .priceCurrency(currency)
@@ -277,7 +281,7 @@ class AddsCustomRepositoryImplTest {
                 .vinCode(vinCode)
                 .extraInfo(extraInfo)
                 .build();
-        Ads ads3 = Ads.builder()
+        Ad ad3 = Ad.builder()
                 .carDetails(carDetails3)
                 .priceVal(priceVal)
                 .priceCurrency(currency)
@@ -289,19 +293,18 @@ class AddsCustomRepositoryImplTest {
                 .account(account)
                 .build();
         sessionFactory.inTransaction(session -> {
-            session.persist(ads1);
-            session.persist(ads2);
-            session.persist(ads3);
+            session.persist(ad1);
+            session.persist(ad2);
+            session.persist(ad3);
         });
-//        System.out.println("Ad created at: " + ads2.getCreatedAt());;
-        FindAddsRequestParams requestParams = FindAddsRequestParams.builder()
+        FindAdsRequestParams requestParams = FindAdsRequestParams.builder()
                 .brandId(2L)
                 .build();
-        List<AdShortResponseDto> ads = addsCustomRepository.findAdds(requestParams, PageRequest.of(0, 20));
+        List<AdShortResponseDto> ads = adsCustomRepository.find(requestParams, PageRequest.of(1, 20));
         assertNotNull(ads);
         assertEquals(1L, ads.size());
         AdShortResponseDto expectedAd = AdShortResponseDto.builder()
-                .id(2L)
+                .id(ad2.getId())
                 .price(priceVal)
                 .currencyName("AZE")
                 .brandName("Audi")
@@ -310,7 +313,7 @@ class AddsCustomRepositoryImplTest {
                 .capacityInSm3((short) 50)
                 .mileage(mileage)
                 .cityName("Baku")
-//                .createdAt(Instant.ofEpochMilli(ads2.getCreatedAt().toEpochMilli()))
+                .createdAt(ad2.getCreatedAt())
                 .build();
         System.out.println("Add: " + ads.get(0));
         assertEquals(expectedAd, ads.get(0));
