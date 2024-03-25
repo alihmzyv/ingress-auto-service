@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Builder
@@ -17,7 +18,7 @@ public class AdShortResponseDto {
     String brandName;
     String modelName;
     Short year;
-    Short capacityInSm3;
+    BigDecimal capacityInLitres;
     Long mileage;
     String cityName;
     Instant createdAt;

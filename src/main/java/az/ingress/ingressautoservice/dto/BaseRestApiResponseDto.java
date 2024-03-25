@@ -26,7 +26,7 @@ public class BaseRestApiResponseDto<D> {
     @FieldDefaults(level = AccessLevel.PRIVATE)
     private static class Error {
         String code;
-        String description;
+        String message;
     }
 
     D data;

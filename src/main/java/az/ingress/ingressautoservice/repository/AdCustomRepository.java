@@ -6,8 +6,10 @@ import az.ingress.ingressautoservice.entity.Ad;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AdCustomRepository {
     List<AdShortResponseDto> find(FindAdsRequestParams requestParams, Pageable pageable);
     Ad save(Ad ad);
+    Optional<Ad> findById(Long id);
 }

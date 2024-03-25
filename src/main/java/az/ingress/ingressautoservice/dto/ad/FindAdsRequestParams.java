@@ -1,5 +1,6 @@
 package az.ingress.ingressautoservice.dto.ad;
 
+import az.ingress.ingressautoservice.constant.MileageType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -13,13 +14,6 @@ import java.util.Set;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class FindAdsRequestParams {
-    public enum MileageType {
-        ALL,
-        WITH,
-        WITHOUT
-    }
-
-
     Long brandId;
     Set<Long> modelIds;
     Set<Long> cityIds;

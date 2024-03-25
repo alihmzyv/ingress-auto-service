@@ -1,9 +1,7 @@
 package az.ingress.ingressautoservice.entity.helper;
 
 import az.ingress.ingressautoservice.entity.cardetails.*;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -15,7 +13,10 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Embeddable
 public class CarDetails {
-    //TODO: add Brand as field
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    Brand brand;
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     Model model;

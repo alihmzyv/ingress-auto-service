@@ -24,10 +24,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.SortDirection;
 import org.hibernate.query.criteria.CriteriaDefinition;
 import org.hibernate.query.criteria.JpaExpression;
+import org.hibernate.query.criteria.JpaSelection;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,14 +51,16 @@ public class AdCustomRepositoryImpl implements AdCustomRepository {
     private CriteriaQuery<AdShortResponseDto> getCriteriaQuery(FindAdsRequestParams requestParams, Pageable pageable) {
         return new CriteriaDefinition<>(sessionFactory, AdShortResponseDto.class) {{
             Root<Ad> root = from(Ad.class);
-
+            JpaSelection<BigDecimal> capacityInLitres = quot(root.get(Ad_.carDetails).get(CarDetails_.engineCapacity).get(EngineCapacity_.capacityInSm3), BigDecimal.valueOf(1000))
+                    .as(BigDecimal.class)
+                    .alias("capacity_in_litres");
             multiselect(root.get(Ad_.id),
                     root.get(Ad_.priceVal),
                     root.get(Ad_.priceCurrency).get(Currency_.name),
                     root.get(Ad_.carDetails).get(CarDetails_.model).get(Model_.brand).get(Brand_.name),
                     root.get(Ad_.carDetails).get(CarDetails_.model).get(Model_.name),
                     root.get(Ad_.carDetails).get(CarDetails_.yearOfCar),
-                    root.get(Ad_.carDetails).get(CarDetails_.engineCapacity).get(EngineCapacity_.capacityInSm3),
+                    capacityInLitres,
                     root.get(Ad_.carDetails).get(CarDetails_.mileage),
                     root.get(Ad_.city).get(City_.name),
                     root.get(Ad_.createdAt));
@@ -129,5 +133,26 @@ public class AdCustomRepositoryImpl implements AdCustomRepository {
             session.persist(ad);
             return ad;
         });
+    }
+
+    @Override
+    public Optional<Ad> findById(Long id) {
+        return Optional.ofNullable(sessionFactory.fromSession(session -> session.createSelectionQuery("select ad from Ad ad " +
+                        "join fetch ad.carDetails.model " +
+                        "join fetch ad.carDetails.model.brand " +
+                        "join fetch ad.carDetails.bodyStyle " +
+                        "join fetch ad.carDetails.color " +
+                        "join fetch ad.carDetails.driveUnitType " +
+                        "join fetch ad.carDetails.engineCapacity " +
+                        "join fetch ad.carDetails.fuelType " +
+                        "join fetch ad.carDetails.marketVersion " +
+                        "join fetch ad.carDetails.transmissionType " +
+                        "join fetch ad.carDetails.ownershipHistory " +
+                        "join fetch ad.account " +
+                        "join fetch ad.city " +
+                        "join fetch ad.priceCurrency " +
+                        "where ad.id = :id", Ad.class)
+                .setParameter("id", id)
+                .getSingleResult()));
     }
 }

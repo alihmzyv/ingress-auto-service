@@ -49,7 +49,6 @@ public class Ad extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     Account account;
 
-    //FIXME: should be
     @Generated(event = EventType.INSERT)
     Instant createdAt;
 

@@ -30,31 +30,38 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
+                  name: brand_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: ad_brand__fk
+                    references: brand(id)
+                    nullable: false
+              - column:
                   name: model_id
                   type: bigint
                   constraints:
-                    foreignKeyName: ads_model__fk
+                    foreignKeyName: ad_model__fk
                     references: model(id)
                     nullable: false
               - column:
                   name: fuel_type_id
                   type: bigint
                   constraints:
-                    foreignKeyName: ads_fuel_type__fk
+                    foreignKeyName: ad_fuel_type__fk
                     references: fuel_type(id)
                     nullable: false
               - column:
                   name: drive_unit_type_id
                   type: bigint
                   constraints:
-                    foreignKeyName: ads_drive_unit__fk
+                    foreignKeyName: ad_drive_unit__fk
                     references: drive_unit_type(id)
                     nullable: false
               - column:
                   name: body_style_id
                   type: bigint
                   constraints:
-                    foreignKeyName: ads_body_style__fk
+                    foreignKeyName: ad_body_style__fk
                     references: body_style(id)
                     nullable: false
               - column:
@@ -71,14 +78,14 @@ databaseChangeLog:
                   name: color_id
                   type: bigint
                   constraints:
-                    foreignKeyName: ads_color__fk
+                    foreignKeyName: ad_color__fk
                     references: color(id)
                     nullable: false
               - column:
                   name: engine_capacity_id
                   type: bigint
                   constraints:
-                    foreignKeyName: ads_engine_capacity__fk
+                    foreignKeyName: ad_engine_capacity__fk
                     references: engine_capacity(id)
                     nullable: false
               - column:
@@ -90,7 +97,7 @@ databaseChangeLog:
                   name: price_currency_id
                   type: bigint
                   constraints:
-                    foreignKeyName: ads_currency__fk
+                    foreignKeyName: ad_currency__fk
                     references: currency(id)
                     nullable: false
               - column:
@@ -102,19 +109,19 @@ databaseChangeLog:
                   name: ownership_history_id
                   type: bigint
                   constraints:
-                    foreignKeyName: ads_ownership_history__fk
+                    foreignKeyName: ad_ownership_history__fk
                     references: ownership_history(id)
               - column:
                   name: market_version_id
                   type: bigint
                   constraints:
-                    foreignKeyName: ads_market_version__fk
+                    foreignKeyName: ad_market_version__fk
                     references: market_version(id)
               - column:
                   name: transmission_type_id
                   type: bigint
                   constraints:
-                    foreignKeyName: ads_transmission_type__fk
+                    foreignKeyName: ad_transmission_type__fk
                     references: transmission_type(id)
                     nullable: false
               - column:
@@ -156,7 +163,7 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
-                    foreignKeyName: ads_city__fk
+                    foreignKeyName: ad_city__fk
                     references: city(id)
               - column:
                   name: email_address_of_seller
@@ -168,7 +175,7 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
-                    foreignKeyName: ads_account__fk
+                    foreignKeyName: ad_account__fk
                     references: account(id)
               - column:
                   name: created_at
