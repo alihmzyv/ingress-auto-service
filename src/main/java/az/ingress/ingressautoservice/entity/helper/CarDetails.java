@@ -15,6 +15,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Embeddable
 public class CarDetails {
+    //TODO: add Brand as field
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     Model model;
