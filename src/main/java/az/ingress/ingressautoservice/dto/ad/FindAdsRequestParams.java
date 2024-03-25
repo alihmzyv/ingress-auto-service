@@ -1,4 +1,4 @@
-package az.ingress.ingressautoservice.dto;
+package az.ingress.ingressautoservice.dto.ad;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -16,14 +15,14 @@ import java.util.Set;
 public class FindAdsRequestParams {
     public enum MileageType {
         ALL,
-        NEW,
-        USED
+        WITH,
+        WITHOUT
     }
 
 
     Long brandId;
     Set<Long> modelIds;
-    List<Long> cityIds;
+    Set<Long> cityIds;
     @Min(1)
     Long minPrice;
     @Min(1)
@@ -32,7 +31,7 @@ public class FindAdsRequestParams {
     Long currencyId;
     Boolean eligibleForLoan;
     Boolean eligibleForBarter;
-    List<Long> bodyStyleIds;
+    Set<Long> bodyStyleIds;
     Byte minYear;
     Byte maxYear;
     MileageType mileageType;

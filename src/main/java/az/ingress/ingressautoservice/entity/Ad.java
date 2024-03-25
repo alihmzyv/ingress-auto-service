@@ -4,10 +4,7 @@ import az.ingress.ingressautoservice.entity.addetails.City;
 import az.ingress.ingressautoservice.entity.addetails.Currency;
 import az.ingress.ingressautoservice.entity.helper.BaseEntity;
 import az.ingress.ingressautoservice.entity.helper.CarDetails;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -52,11 +49,10 @@ public class Ad extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     Account account;
 
-    @Column(nullable = false)
+    //FIXME: should be
     @Generated(event = EventType.INSERT)
     Instant createdAt;
 
-    @Column(nullable = false, insertable = false)
     @Generated(event = EventType.INSERT)
     Instant updatedAt;
 }

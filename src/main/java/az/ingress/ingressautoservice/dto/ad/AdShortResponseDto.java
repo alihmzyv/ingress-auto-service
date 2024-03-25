@@ -1,4 +1,4 @@
-package az.ingress.ingressautoservice.dto;
+package az.ingress.ingressautoservice.dto.ad;
 
 import lombok.AccessLevel;
 import lombok.Builder;
