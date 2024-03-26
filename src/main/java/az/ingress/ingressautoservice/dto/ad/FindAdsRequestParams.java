@@ -27,7 +27,7 @@ public class FindAdsRequestParams {
     Boolean eligibleForLoan;
     Boolean eligibleForBarter;
     Set<Long> bodyStyleIds;
-    Byte minYear;
-    Byte maxYear;
+    Short minYear;
+    Short maxYear;
     MileageType mileageType;
 }
