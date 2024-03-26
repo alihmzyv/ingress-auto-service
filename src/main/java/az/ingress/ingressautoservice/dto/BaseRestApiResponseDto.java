@@ -4,7 +4,9 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
@@ -22,11 +24,28 @@ public class BaseRestApiResponseDto<D> {
         return dto;
     }
 
+    public static <D> BaseRestApiResponseDto<D> ofErrors(Error... errors) {
+        BaseRestApiResponseDto<D> dto = new BaseRestApiResponseDto<>();
+        Optional.ofNullable(errors)
+                .map(arr -> Arrays.stream(arr).toList())
+                .ifPresent(dto::setErrors);
+        return dto;
+    }
+
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
-    private static class Error {
+    public static class Error {
+        public static Error of(String code, String message) {
+            return new Error(code, message);
+        }
+
         String code;
         String message;
+
+        private Error(String code, String message) {
+            this.code = code;
+            this.message = message;
+        }
     }
 
     D data;

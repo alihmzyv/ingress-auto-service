@@ -6,16 +6,12 @@ import lombok.experimental.FieldDefaults;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class NotFoundException extends Exception {
-    String code;
-
+public class NotFoundException extends ApplicationException {
     public static NotFoundException of(String code, String message) {
         return new NotFoundException(code, message);
     }
 
     private NotFoundException(String code, String message) {
-        super(message);
-        this.code = code;
+        super(code, message);
     }
-
 }

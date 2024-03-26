@@ -4,13 +4,13 @@ import az.ingress.ingressautoservice.dto.ad.AdResponseDto;
 import az.ingress.ingressautoservice.dto.ad.AdShortResponseDto;
 import az.ingress.ingressautoservice.dto.ad.FindAdsRequestParams;
 import az.ingress.ingressautoservice.exception.NotFoundException;
-import az.ingress.ingressautoservice.repository.AdCustomRepository;
+import az.ingress.ingressautoservice.mapper.AdMapper;
+import az.ingress.ingressautoservice.repository.AdRepository;
 import az.ingress.ingressautoservice.service.AdService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -22,19 +22,19 @@ import static az.ingress.ingressautoservice.constant.AdError.AD_NOT_FOUND;
 @RequiredArgsConstructor
 @Service
 public class AdServiceImpl implements AdService {
-    AdCustomRepository adCustomRepository;
-    ModelMapper modelMapper;
+    AdRepository adRepository;
+    AdMapper adMapper;
 
     @Override
     public List<AdShortResponseDto> find(FindAdsRequestParams requestParams, Pageable pageable) {
-        return adCustomRepository.find(requestParams, pageable);
+        return adRepository.find(requestParams, pageable);
     }
 
     @SneakyThrows
     @Override
     public AdResponseDto findById(Long id) {
-        return adCustomRepository.findById(id)
-                .map(ad -> modelMapper.map(ad, AdResponseDto.class))
+        return adRepository.findById(id)
+                .map(adMapper::toResponse)
                 .orElseThrow(() -> NotFoundException.of(AD_NOT_FOUND.getCode(), AD_NOT_FOUND.buildMessage(id)));
     }
 }

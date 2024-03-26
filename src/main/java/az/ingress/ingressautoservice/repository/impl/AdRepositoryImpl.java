@@ -11,7 +11,7 @@ import az.ingress.ingressautoservice.entity.cardetails.Brand_;
 import az.ingress.ingressautoservice.entity.cardetails.EngineCapacity_;
 import az.ingress.ingressautoservice.entity.cardetails.Model_;
 import az.ingress.ingressautoservice.entity.helper.CarDetails_;
-import az.ingress.ingressautoservice.repository.AdCustomRepository;
+import az.ingress.ingressautoservice.repository.AdRepository;
 import az.ingress.ingressautoservice.util.CriteriaPathResolver;
 import jakarta.persistence.PersistenceUnit;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @Repository
-public class AdCustomRepositoryImpl implements AdCustomRepository {
+public class AdRepositoryImpl implements AdRepository {
     @PersistenceUnit
     private SessionFactory sessionFactory;
 
@@ -152,7 +152,7 @@ public class AdCustomRepositoryImpl implements AdCustomRepository {
                         "join fetch ad.city " +
                         "join fetch ad.priceCurrency " +
                         "where ad.id = :id", Ad.class)
-                .setParameter("id", id)
+                .setParameter(Ad_.ID, id)
                 .getSingleResult()));
     }
 }

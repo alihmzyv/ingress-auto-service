@@ -11,7 +11,7 @@ import az.ingress.ingressautoservice.entity.addetails.Currency;
 import az.ingress.ingressautoservice.entity.cardetails.*;
 import az.ingress.ingressautoservice.entity.helper.CarDetails;
 import az.ingress.ingressautoservice.entity.helper.CarDetails_;
-import az.ingress.ingressautoservice.repository.AdCustomRepository;
+import az.ingress.ingressautoservice.repository.AdRepository;
 import jakarta.persistence.PersistenceUnit;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.hibernate.SessionFactory;
@@ -38,11 +38,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
-class AdCustomRepositoryImplTest {
+class AdRepositoryImplTest {
     @PersistenceUnit
     private SessionFactory sessionFactory;
     @Autowired
-    private AdCustomRepository adCustomRepository;
+    private AdRepository adRepository;
 
     @AfterEach
     void clean() {
@@ -142,7 +142,7 @@ class AdCustomRepositoryImplTest {
                 .emailAddressOfSeller(emailAddressOfSeller)
                 .account(account)
                 .build();
-        Ad adSaved = adCustomRepository.save(ad);
+        Ad adSaved = adRepository.save(ad);
         assertThat(adSaved)
                 .usingRecursiveComparison(RecursiveComparisonConfiguration.builder()
                         .withIgnoreAllExpectedNullFields(true)
@@ -334,7 +334,7 @@ class AdCustomRepositoryImplTest {
         FindAdsRequestParams requestParams = FindAdsRequestParams.builder()
                 .brandId(2L)
                 .build();
-        List<AdShortResponseDto> ads = adCustomRepository.find(requestParams, PageRequest.of(0, 20));
+        List<AdShortResponseDto> ads = adRepository.find(requestParams, PageRequest.of(0, 20));
         assertNotNull(ads);
         assertEquals(1L, ads.size());
         AdShortResponseDto expectedAd = AdShortResponseDto.builder()
@@ -525,7 +525,7 @@ class AdCustomRepositoryImplTest {
         FindAdsRequestParams requestParams = FindAdsRequestParams.builder()
                 .modelIds(Set.of(3L))
                 .build();
-        List<AdShortResponseDto> ads = adCustomRepository.find(requestParams, PageRequest.of(0, 20));
+        List<AdShortResponseDto> ads = adRepository.find(requestParams, PageRequest.of(0, 20));
         assertNotNull(ads);
         assertEquals(1L, ads.size());
         AdShortResponseDto expectedAd = AdShortResponseDto.builder()
@@ -722,7 +722,7 @@ class AdCustomRepositoryImplTest {
         FindAdsRequestParams requestParams = FindAdsRequestParams.builder()
                 .cityIds(Set.of(2L))
                 .build();
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, PageRequest.of(0, 20));
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, PageRequest.of(0, 20));
         assertNotNull(actualAds);
         assertEquals(2, actualAds.size());
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
@@ -932,7 +932,7 @@ class AdCustomRepositoryImplTest {
         FindAdsRequestParams requestParams = FindAdsRequestParams.builder()
                 .cityIds(Set.of(2L))
                 .build();
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, PageRequest.of(0, 20));
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, PageRequest.of(0, 20));
         assertNotNull(actualAds);
         assertEquals(3, actualAds.size());
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
@@ -1155,7 +1155,7 @@ class AdCustomRepositoryImplTest {
         FindAdsRequestParams requestParams = FindAdsRequestParams.builder()
                 .minPrice(10000L)
                 .build();
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, PageRequest.of(0, 20));
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, PageRequest.of(0, 20));
         assertNotNull(actualAds);
         assertEquals(2, actualAds.size());
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
@@ -1379,7 +1379,7 @@ class AdCustomRepositoryImplTest {
         FindAdsRequestParams requestParams = FindAdsRequestParams.builder()
                 .maxPrice(5000L)
                 .build();
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, PageRequest.of(0, 20));
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, PageRequest.of(0, 20));
         assertNotNull(actualAds);
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
                 .id(ad1.getId())
@@ -1608,7 +1608,7 @@ class AdCustomRepositoryImplTest {
         FindAdsRequestParams requestParams = FindAdsRequestParams.builder()
                 .currencyId(2L)
                 .build();
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, PageRequest.of(0, 20));
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, PageRequest.of(0, 20));
         assertNotNull(actualAds);
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
                 .id(ad1.getId())
@@ -1842,7 +1842,7 @@ class AdCustomRepositoryImplTest {
                 .eligibleForLoan(true)
                 .eligibleForBarter(false)
                 .build();
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, PageRequest.of(0, 20));
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, PageRequest.of(0, 20));
         assertNotNull(actualAds);
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
                 .id(ad1.getId())
@@ -2076,7 +2076,7 @@ class AdCustomRepositoryImplTest {
         FindAdsRequestParams requestParams = FindAdsRequestParams.builder()
                 .mileageType(MileageType.WITHOUT)
                 .build();
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, PageRequest.of(0, 20));
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, PageRequest.of(0, 20));
         assertNotNull(actualAds);
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
                 .id(ad1.getId())
@@ -2316,7 +2316,7 @@ class AdCustomRepositoryImplTest {
         });
         FindAdsRequestParams requestParams = FindAdsRequestParams.builder()
                 .build();
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, PageRequest.of(0, 20));
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, PageRequest.of(0, 20));
         assertNotNull(actualAds);
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
                 .id(ad1.getId())
@@ -2559,7 +2559,7 @@ class AdCustomRepositoryImplTest {
         PageRequest pageRequest = PageRequest.of(0,
                 20,
                 Sort.by(Sort.Order.desc(Ad_.CREATED_AT)));
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, pageRequest);
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, pageRequest);
         assertNotNull(actualAds);
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
                 .id(ad1.getId())
@@ -2803,7 +2803,7 @@ class AdCustomRepositoryImplTest {
         PageRequest pageRequest = PageRequest.of(0,
                 20,
                 Sort.by(Sort.Order.asc(Ad_.PRICE_VAL)));
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, pageRequest);
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, pageRequest);
         assertNotNull(actualAds);
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
                 .id(ad1.getId())
@@ -3047,7 +3047,7 @@ class AdCustomRepositoryImplTest {
         PageRequest pageRequest = PageRequest.of(0,
                 20,
                 Sort.by(Sort.Order.desc(Ad_.PRICE_VAL)));
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, pageRequest);
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, pageRequest);
         assertNotNull(actualAds);
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
                 .id(ad1.getId())
@@ -3292,7 +3292,7 @@ class AdCustomRepositoryImplTest {
         PageRequest pageRequest = PageRequest.of(0,
                 20,
                 Sort.by(Sort.Order.asc(String.join(".", Ad_.CAR_DETAILS, CarDetails_.MILEAGE))));
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, pageRequest);
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, pageRequest);
         assertNotNull(actualAds);
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
                 .id(ad1.getId())
@@ -3539,7 +3539,7 @@ class AdCustomRepositoryImplTest {
         PageRequest pageRequest = PageRequest.of(0,
                 20,
                 Sort.by(Sort.Order.desc(String.join(".", Ad_.CAR_DETAILS, CarDetails_.YEAR_OF_CAR))));
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, pageRequest);
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, pageRequest);
         assertNotNull(actualAds);
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
                 .id(ad1.getId())
@@ -3795,7 +3795,7 @@ class AdCustomRepositoryImplTest {
         PageRequest pageRequest = PageRequest.of(0,
                 24,
                 Sort.by(Sort.Order.desc(String.join(".", Ad_.CREATED_AT))));
-        List<AdShortResponseDto> actualAds = adCustomRepository.find(requestParams, pageRequest);
+        List<AdShortResponseDto> actualAds = adRepository.find(requestParams, pageRequest);
         assertNotNull(actualAds);
         AdShortResponseDto expectedAd1 = AdShortResponseDto.builder()
                 .id(ad1.getId())
@@ -3941,7 +3941,7 @@ class AdCustomRepositoryImplTest {
             session.persist(ad1);
         });
         assertNotNull(ad1.getId());
-        Optional<Ad> adOpt = adCustomRepository.findById(ad1.getId());
+        Optional<Ad> adOpt = adRepository.findById(ad1.getId());
         assertTrue(adOpt.isPresent());
         Ad ad = adOpt.get();
         assertEquals(ad.getCity().getName(), "Baku");

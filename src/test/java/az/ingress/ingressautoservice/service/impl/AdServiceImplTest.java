@@ -1,8 +1,8 @@
 package az.ingress.ingressautoservice.service.impl;
 
 import az.ingress.ingressautoservice.constant.MileageType;
-import az.ingress.ingressautoservice.dto.CarDetailsDto;
 import az.ingress.ingressautoservice.dto.ad.AdResponseDto;
+import az.ingress.ingressautoservice.dto.ad.CarDetailsDto;
 import az.ingress.ingressautoservice.entity.Account;
 import az.ingress.ingressautoservice.entity.Ad;
 import az.ingress.ingressautoservice.entity.addetails.City;
@@ -10,7 +10,7 @@ import az.ingress.ingressautoservice.entity.addetails.Currency;
 import az.ingress.ingressautoservice.entity.cardetails.*;
 import az.ingress.ingressautoservice.entity.helper.CarDetails;
 import az.ingress.ingressautoservice.exception.NotFoundException;
-import az.ingress.ingressautoservice.repository.AdCustomRepository;
+import az.ingress.ingressautoservice.repository.AdRepository;
 import az.ingress.ingressautoservice.service.AdService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 class AdServiceImplTest {
     @MockBean
-    AdCustomRepository adCustomRepository;
+    AdRepository adRepository;
 
     @Autowired
     AdService adService;
@@ -35,7 +35,7 @@ class AdServiceImplTest {
     @Test
     void whenAdDoesNotExistByIdThenItShouldFail() {
         Long id = 1L;
-        when(adCustomRepository.findById(id))
+        when(adRepository.findById(id))
                 .thenReturn(Optional.empty());
         assertThrowsExactly(NotFoundException.class,
                 () -> adService.findById(id),
@@ -157,7 +157,7 @@ class AdServiceImplTest {
                 .emailAddressOfSeller(emailAddressOfSeller)
                 .account(account)
                 .build();
-        when(adCustomRepository.findById(id))
+        when(adRepository.findById(id))
                 .thenReturn(Optional.of(ad));
         CarDetailsDto carDetailsDto = CarDetailsDto.builder()
                 .brandName(brandName)

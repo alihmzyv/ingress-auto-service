@@ -1,6 +1,5 @@
 package az.ingress.ingressautoservice.dto.ad;
 
-import az.ingress.ingressautoservice.dto.CarDetailsDto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.FieldNameConstants;

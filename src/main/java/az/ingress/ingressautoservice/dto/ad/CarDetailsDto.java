@@ -1,4 +1,4 @@
-package az.ingress.ingressautoservice.dto;
+package az.ingress.ingressautoservice.dto.ad;
 
 import az.ingress.ingressautoservice.constant.MileageType;
 import lombok.*;

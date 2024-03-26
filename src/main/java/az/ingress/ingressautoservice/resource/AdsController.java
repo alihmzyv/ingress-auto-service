@@ -1,7 +1,8 @@
 package az.ingress.ingressautoservice.resource;
 
-import az.ingress.ingressautoservice.dto.ad.AdShortResponseDto;
 import az.ingress.ingressautoservice.dto.BaseRestApiResponseDto;
+import az.ingress.ingressautoservice.dto.ad.AdResponseDto;
+import az.ingress.ingressautoservice.dto.ad.AdShortResponseDto;
 import az.ingress.ingressautoservice.dto.ad.FindAdsRequestParams;
 import az.ingress.ingressautoservice.entity.Ad_;
 import az.ingress.ingressautoservice.service.AdService;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/ads")
 @RestController
-public class AdsResource implements RestApiResponseBuilder {
+public class AdsController implements RestApiResponseBuilder {
     AdService adService;
 
     @GetMapping
@@ -32,5 +34,10 @@ public class AdsResource implements RestApiResponseBuilder {
                                                                    sort = Ad_.CREATED_AT,
                                                                    direction = Sort.Direction.DESC) Pageable pageable) {
         return generateResponse(adService.find(findAdsRequestParams, pageable));
+    }
+
+    @GetMapping("/{id}")
+    public BaseRestApiResponseDto<AdResponseDto> findById(@PathVariable Long id) {
+        return generateResponse(adService.findById(id));
     }
 }
