@@ -3,10 +3,12 @@ package az.ingress.ingressautoservice.mapper;
 import az.ingress.ingressautoservice.constant.MileageType;
 import az.ingress.ingressautoservice.dto.ad.AdResponseDto;
 import az.ingress.ingressautoservice.dto.ad.CreateAdRequestDto;
+import az.ingress.ingressautoservice.entity.Account;
 import az.ingress.ingressautoservice.entity.Ad;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Optional;
 
+@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @Component
@@ -43,7 +46,12 @@ public class AdMapper {
         return adResponse;
     }
 
-    public Ad toEntity(CreateAdRequestDto request) {
-        return modelMapper.map(request, Ad.class);
+    public Ad toEntity(Long accountId, CreateAdRequestDto request) {
+        Ad ad = modelMapper.map(request, Ad.class);
+        ad.setAccount(Account.builder()
+                .id(accountId)
+                .build());
+        log.info("Ad: {}", ad);
+        return ad;
     }
 }

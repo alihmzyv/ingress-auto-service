@@ -4,7 +4,7 @@ import az.ingress.ingressautoservice.dto.account.AccountResponseDto;
 import az.ingress.ingressautoservice.dto.account.CreateAccountRequestDto;
 
 public interface AccountService {
-    AccountResponseDto create(CreateAccountRequestDto request);
+    void create(CreateAccountRequestDto request);
 
     AccountResponseDto getById(Long accountId);
 

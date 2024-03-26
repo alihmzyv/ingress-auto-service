@@ -4,7 +4,6 @@ import az.ingress.ingressautoservice.dto.BaseRestApiResponseDto;
 import az.ingress.ingressautoservice.dto.account.AccountResponseDto;
 import az.ingress.ingressautoservice.dto.account.CreateAccountRequestDto;
 import az.ingress.ingressautoservice.dto.ad.AdShortResponseDto;
-import az.ingress.ingressautoservice.dto.ad.CreateAdRequestDto;
 import az.ingress.ingressautoservice.dto.ad.FindAdsRequestParams;
 import az.ingress.ingressautoservice.entity.Ad_;
 import az.ingress.ingressautoservice.service.AccountService;
@@ -14,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static az.ingress.ingressautoservice.constant.ApiConstants.REQ_HEADER_USER_ID_NAME;
+
+@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @RequestMapping("/accounts")
@@ -30,14 +33,15 @@ public class AccountController implements RestApiResponseBuilder {
     AccountService accountService;
     AdService adService;
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping
-    public BaseRestApiResponseDto<AccountResponseDto> create(@RequestBody @Valid CreateAccountRequestDto request) {
-        return generateResponse(accountService.create(request));
+    public void create(@RequestBody @Valid CreateAccountRequestDto request) {
+        accountService.create(request);
     }
 
     //TODO: security not implemented yet
-    @GetMapping("/{id}")
-    public BaseRestApiResponseDto<AccountResponseDto> getById(@PathVariable Long id) {
+    @GetMapping
+    public BaseRestApiResponseDto<AccountResponseDto> getById(@RequestHeader(REQ_HEADER_USER_ID_NAME) Long id) {
         return generateResponse(accountService.getById(id));
     }
 
@@ -50,17 +54,7 @@ public class AccountController implements RestApiResponseBuilder {
                                                                            direction = Sort.Direction.DESC)
                                                                    Pageable pageable) {
         accountService.ensureExistsById(id);
-        FindAdsRequestParams requestParams = FindAdsRequestParams.builder()
-                .accountId(id)
-                .build();
-        return generateResponse(adService.find(requestParams, pageable));
-    }
-
-    //TODO: security not implemented yet
-    @PostMapping("/{id}/ads")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void createAd(@PathVariable("id") Long accountId,
-                         @RequestBody @Valid CreateAdRequestDto request) {
-        adService.createAd(accountId, request);
+        return generateResponse(adService.find(id, pageable),
+                adService.getTotalNumOfPages(id, pageable));
     }
 }

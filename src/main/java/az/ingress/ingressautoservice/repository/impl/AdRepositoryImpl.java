@@ -155,4 +155,34 @@ public class AdRepositoryImpl implements AdRepository {
                 .setParameter(Ad_.ID, id)
                 .getSingleResult()));
     }
+
+    @Override
+    public int deleteById(Long id) {
+        return sessionFactory.fromTransaction(session -> session.createMutationQuery("delete from Ad ad " +
+                "where ad.id = :id")
+                .setParameter("id", id)
+                .executeUpdate());
+    }
+
+    @Override
+    public Long getTotalNumOfPages(FindAdsRequestParams requestParams, Pageable pageable) {
+        return sessionFactory.fromSession(session -> (long) Math.ceil((double) session.createSelectionQuery("select count(*) from Ad ad", Long.class)
+                .getSingleResult() / pageable.getPageSize()));
+    }
+
+    @Override
+    public List<AdShortResponseDto> find(Long accountId, Pageable pageable) {
+        FindAdsRequestParams request = FindAdsRequestParams.builder()
+                .accountId(accountId)
+                .build();
+        return find(request, pageable);
+    }
+
+    @Override
+    public Long getTotalNumOfPages(Long accountId, Pageable pageable) {
+        FindAdsRequestParams request = FindAdsRequestParams.builder()
+                .accountId(accountId)
+                .build();
+        return getTotalNumOfPages(request, pageable);
+    }
 }

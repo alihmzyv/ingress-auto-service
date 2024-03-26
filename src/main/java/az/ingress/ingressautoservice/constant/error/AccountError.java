@@ -1,4 +1,4 @@
-package az.ingress.ingressautoservice.constant;
+package az.ingress.ingressautoservice.constant.error;
 
 import lombok.Getter;
 

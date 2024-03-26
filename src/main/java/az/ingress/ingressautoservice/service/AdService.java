@@ -10,6 +10,11 @@ import java.util.List;
 
 public interface AdService {
     List<AdShortResponseDto> find(FindAdsRequestParams requestParams, Pageable pageable);
+    List<AdShortResponseDto> find(Long accountId, Pageable pageable);
+    Long getTotalNumOfPages(FindAdsRequestParams requestParams, Pageable pageable);
+    Long getTotalNumOfPages(Long accountId, Pageable pageable);
     AdResponseDto findById(Long id);
     void createAd(Long accountId, CreateAdRequestDto request);
+
+    void deleteById(Long id);
 }

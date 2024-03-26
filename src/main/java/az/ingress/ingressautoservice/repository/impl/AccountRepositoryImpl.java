@@ -56,7 +56,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     public boolean existsById(Long id) {
         return sessionFactory.fromSession(session -> session.createSelectionQuery(
-                "select count(account) from Account account", Long.class)
+                "select count(*) from Account account", Long.class)
                 .getSingleResult() > 0);
     }
 }

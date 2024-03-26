@@ -3945,6 +3945,5 @@ class AdRepositoryImplTest {
         assertTrue(adOpt.isPresent());
         Ad ad = adOpt.get();
         assertEquals(ad.getCity().getName(), "Baku");
-        //TODO: test other fields
     }
 }

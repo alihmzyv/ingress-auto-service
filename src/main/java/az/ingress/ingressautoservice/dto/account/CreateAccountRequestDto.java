@@ -13,10 +13,10 @@ import lombok.experimental.FieldDefaults;
 @Data
 public class CreateAccountRequestDto {
     @NotEmpty
-    @Pattern(regexp = "^0(?:55|77)\\d{7}$\n")
+    @Pattern(regexp = "^0(55|77)\\d{7}$", message = "Phone number should have format of '0554443322'")
     String phoneNumber;
     @NotEmpty
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Password should contain only letters, digits and have min length of 8.")
     String password;
     @Email
     String emailAddress;

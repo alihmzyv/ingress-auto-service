@@ -2,6 +2,8 @@ package az.ingress.ingressautoservice.dto.ad;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -20,13 +22,14 @@ public class CreateAdRequestDto {
     @NotNull
     Long priceCurrencyId;
 
-    @NotNull
+    @NotEmpty
     String nameOfSeller;
 
     @NotNull
     Long cityId;
 
-    @NotNull
+    @NotEmpty
+    @Email
     String emailAddressOfSeller;
 
     @JsonIgnore

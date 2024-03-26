@@ -20,6 +20,7 @@ import java.time.Instant;
 @Setter
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
 @Entity
 public class Ad extends BaseEntity {
     CarDetails carDetails;
@@ -29,6 +30,7 @@ public class Ad extends BaseEntity {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ToString.Exclude
     Currency priceCurrency;
 
     boolean eligibleForLoan;
@@ -40,6 +42,7 @@ public class Ad extends BaseEntity {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ToString.Exclude
     City city;
 
     @NotNull
@@ -47,6 +50,7 @@ public class Ad extends BaseEntity {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     Account account;
 
     @Generated(event = EventType.INSERT)

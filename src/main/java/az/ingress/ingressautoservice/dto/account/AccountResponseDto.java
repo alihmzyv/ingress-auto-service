@@ -1,10 +1,10 @@
 package az.ingress.ingressautoservice.dto.account;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data

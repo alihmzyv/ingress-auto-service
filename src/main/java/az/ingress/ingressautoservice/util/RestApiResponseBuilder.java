@@ -4,6 +4,9 @@ import az.ingress.ingressautoservice.dto.BaseRestApiResponseDto;
 import az.ingress.ingressautoservice.exception.ApplicationException;
 
 public interface RestApiResponseBuilder {
+    default <D> BaseRestApiResponseDto<D> generateResponse(D data, long totalNumOfPages) {
+        return BaseRestApiResponseDto.of(data, totalNumOfPages);
+    }
     default <D> BaseRestApiResponseDto<D> generateResponse(D data) {
         return BaseRestApiResponseDto.of(data);
     }

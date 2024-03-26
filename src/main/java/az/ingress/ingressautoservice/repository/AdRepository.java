@@ -12,4 +12,12 @@ public interface AdRepository {
     List<AdShortResponseDto> find(FindAdsRequestParams requestParams, Pageable pageable);
     Ad save(Ad ad);
     Optional<Ad> findById(Long id);
+
+    int deleteById(Long id);
+
+    Long getTotalNumOfPages(FindAdsRequestParams requestParams, Pageable pageable);
+
+    List<AdShortResponseDto> find(Long accountId, Pageable pageable);
+
+    Long getTotalNumOfPages(Long accountId, Pageable pageable);
 }
