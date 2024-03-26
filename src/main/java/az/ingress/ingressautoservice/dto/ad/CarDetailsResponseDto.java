@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 @FieldNameConstants
-public class CarDetailsDto {
+public class CarDetailsResponseDto {
     String brandName;
     String modelName;
     String fuelTypeName;

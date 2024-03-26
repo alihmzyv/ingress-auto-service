@@ -14,6 +14,7 @@ import java.util.Set;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class FindAdsRequestParams {
+    Long accountId;
     Long brandId;
     Set<Long> modelIds;
     Set<Long> cityIds;

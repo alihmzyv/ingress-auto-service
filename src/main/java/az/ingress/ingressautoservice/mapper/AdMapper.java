@@ -2,6 +2,7 @@ package az.ingress.ingressautoservice.mapper;
 
 import az.ingress.ingressautoservice.constant.MileageType;
 import az.ingress.ingressautoservice.dto.ad.AdResponseDto;
+import az.ingress.ingressautoservice.dto.ad.CreateAdRequestDto;
 import az.ingress.ingressautoservice.entity.Ad;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,9 @@ public class AdMapper {
                 })
                 .ifPresent(mileageType -> adResponse.getCarDetails().setMileageType(mileageType));
         return adResponse;
+    }
+
+    public Ad toEntity(CreateAdRequestDto request) {
+        return modelMapper.map(request, Ad.class);
     }
 }

@@ -2,6 +2,8 @@ package az.ingress.ingressautoservice.dto;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Arrays;
@@ -32,7 +34,14 @@ public class BaseRestApiResponseDto<D> {
         return dto;
     }
 
+    public static <D> BaseRestApiResponseDto<D> ofErrors(List<Error> errors) {
+        BaseRestApiResponseDto<D> dto = new BaseRestApiResponseDto<>();
+        dto.setErrors(errors);
+        return dto;
+    }
+
     @Data
+    @NoArgsConstructor
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Error {
         public static Error of(String code, String message) {
@@ -45,6 +54,23 @@ public class BaseRestApiResponseDto<D> {
         private Error(String code, String message) {
             this.code = code;
             this.message = message;
+        }
+    }
+
+
+    @EqualsAndHashCode(callSuper = true)
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Data
+    public static class ValidationError extends Error {
+        public static ValidationError of(String code, String property, String message) {
+            return new ValidationError(code, property, message);
+        }
+
+        String property;
+
+        public ValidationError(String code, String property, String message) {
+            super(code, message);
+            this.property = property;
         }
     }
 

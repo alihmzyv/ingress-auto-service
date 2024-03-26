@@ -30,9 +30,10 @@ public class AdsController implements RestApiResponseBuilder {
     @GetMapping
     public BaseRestApiResponseDto<List<AdShortResponseDto>> getAds(FindAdsRequestParams findAdsRequestParams,
                                                                    @PageableDefault(
-                                                                   size = 24,
-                                                                   sort = Ad_.CREATED_AT,
-                                                                   direction = Sort.Direction.DESC) Pageable pageable) {
+                                                                           size = 24,
+                                                                           sort = Ad_.CREATED_AT,
+                                                                           direction = Sort.Direction.DESC)
+                                                                   Pageable pageable) {
         return generateResponse(adService.find(findAdsRequestParams, pageable));
     }
 

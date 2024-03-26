@@ -47,4 +47,16 @@ public class AccountRepositoryImpl implements AccountRepository {
         return sessionFactory.fromSession(session -> session.createSelectionQuery(criteriaQuery)
                 .getSingleResult());
     }
+
+    @Override
+    public Optional<Account> findById(Long accountId) {
+        return sessionFactory.fromTransaction(session -> Optional.ofNullable(session.find(Account.class, accountId)));
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return sessionFactory.fromSession(session -> session.createSelectionQuery(
+                "select count(account) from Account account", Long.class)
+                .getSingleResult() > 0);
+    }
 }

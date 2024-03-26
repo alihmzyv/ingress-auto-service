@@ -2,7 +2,7 @@ package az.ingress.ingressautoservice.service.impl;
 
 import az.ingress.ingressautoservice.constant.MileageType;
 import az.ingress.ingressautoservice.dto.ad.AdResponseDto;
-import az.ingress.ingressautoservice.dto.ad.CarDetailsDto;
+import az.ingress.ingressautoservice.dto.ad.CarDetailsResponseDto;
 import az.ingress.ingressautoservice.entity.Account;
 import az.ingress.ingressautoservice.entity.Ad;
 import az.ingress.ingressautoservice.entity.addetails.City;
@@ -159,7 +159,7 @@ class AdServiceImplTest {
                 .build();
         when(adRepository.findById(id))
                 .thenReturn(Optional.of(ad));
-        CarDetailsDto carDetailsDto = CarDetailsDto.builder()
+        CarDetailsResponseDto carDetailsResponseDto = CarDetailsResponseDto.builder()
                 .brandName(brandName)
                 .modelName(modelName)
                 .fuelTypeName(fuelTypeName)
@@ -181,7 +181,7 @@ class AdServiceImplTest {
                 .build();
         AdResponseDto expectedAd = AdResponseDto.builder()
                 .id(id)
-                .carDetails(carDetailsDto)
+                .carDetails(carDetailsResponseDto)
                 .priceVal(priceVal)
                 .priceCurrencyName(currencyName)
                 .eligibleForLoan(eligibleForLoan)

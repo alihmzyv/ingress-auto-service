@@ -2,10 +2,12 @@ package az.ingress.ingressautoservice.service.impl;
 
 import az.ingress.ingressautoservice.dto.ad.AdResponseDto;
 import az.ingress.ingressautoservice.dto.ad.AdShortResponseDto;
+import az.ingress.ingressautoservice.dto.ad.CreateAdRequestDto;
 import az.ingress.ingressautoservice.dto.ad.FindAdsRequestParams;
 import az.ingress.ingressautoservice.exception.NotFoundException;
 import az.ingress.ingressautoservice.mapper.AdMapper;
 import az.ingress.ingressautoservice.repository.AdRepository;
+import az.ingress.ingressautoservice.service.AccountService;
 import az.ingress.ingressautoservice.service.AdService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import static az.ingress.ingressautoservice.constant.AdError.AD_NOT_FOUND;
 @Service
 public class AdServiceImpl implements AdService {
     AdRepository adRepository;
+    AccountService accountService;
     AdMapper adMapper;
 
     @Override
@@ -36,5 +39,11 @@ public class AdServiceImpl implements AdService {
         return adRepository.findById(id)
                 .map(adMapper::toResponse)
                 .orElseThrow(() -> NotFoundException.of(AD_NOT_FOUND.getCode(), AD_NOT_FOUND.buildMessage(id)));
+    }
+
+    @Override
+    public void createAd(Long accountId, CreateAdRequestDto request) {
+        accountService.ensureExistsById(accountId);
+        adRepository.save(adMapper.toEntity(request));
     }
 }

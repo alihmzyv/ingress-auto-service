@@ -14,6 +14,11 @@ public enum AdError {
         this.messageFormat = messageFormat;
     }
 
+    AdError(String code) {
+        this.code = code;
+        this.messageFormat = null;
+    }
+
     public String buildMessage(Object... args) {
         return String.format(messageFormat, args);
     }

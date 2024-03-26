@@ -12,7 +12,7 @@ import lombok.experimental.FieldNameConstants;
 @Data
 public class AdResponseDto {
     private Long id;
-    private CarDetailsDto carDetails;
+    private CarDetailsResponseDto carDetails;
     private Long priceVal;
     private String priceCurrencyName;
     private boolean eligibleForLoan;

@@ -5,4 +5,8 @@ import az.ingress.ingressautoservice.dto.account.CreateAccountRequestDto;
 
 public interface AccountService {
     AccountResponseDto create(CreateAccountRequestDto request);
+
+    AccountResponseDto getById(Long accountId);
+
+    void ensureExistsById(Long id);
 }
