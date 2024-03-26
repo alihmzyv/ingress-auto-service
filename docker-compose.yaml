@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  postgres:
+  auto-db:
     image: postgres
     container_name: ingress_auto_db
     environment:
@@ -11,5 +11,17 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  auto-service:
+    container_name: auto-service.${AUTO_SERVICE_IMAGE_VERSION:-latest}
+    image: alihmzyv/auto-service:${AUTO_SERVICE_IMAGE_VERSION:-latest}
+    environment:
+      AUTO_DB_PORT: 5432
+      AUTO_DB_IP: auto-db
+      AUTO_DB_USERNAME: service
+      AUTO_DB_PASSWORD: password
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auto-db
 volumes:
   postgres_data:

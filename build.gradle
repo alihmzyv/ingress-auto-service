@@ -2,14 +2,19 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.4'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'com.google.cloud.tools.jib' version '3.4.0'
 }
 
 ext {
+    dockerRegistry = System.getenv("MS23_DOCKER_REGISTRY") ?: 'alihmzyv'
+    dockerRegistryUsername = System.getenv("MS23_DOCKER_REGISTRY_USERNAME") ?: 'alihmzyv@gmail.com'
+    dockerRegistryPassword = System.getenv("MS23_DOCKER_REGISTRY_PASSWORD") ?: ')MGrsmJ=Y?s8q^2'
     modelMapperVersion = '3.2.0'
 }
 
-group = 'az.ingress'
-version = '0.0.1-SNAPSHOT'
+def hash = 'git rev-parse --short HEAD'.execute().text.trim()
+version = "${projectVersion}.$hash"
+group = 'com.alihmzyv'
 
 java {
     sourceCompatibility = '17'
@@ -40,6 +45,39 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+jib {
+    from {
+        image = 'openjdk:17-jdk-slim'
+    }
+    to {
+        image = "${dockerRegistry}/${project.name}:${project.version}"
+        if (dockerRegistryUsername != null) {
+            auth.setUsername(dockerRegistryUsername)
+        }
+        if (dockerRegistryPassword != null) {
+            auth.setPassword(dockerRegistryPassword)
+        }
+    }
+}
+
+tasks.register('composeUp', Exec) {
+    workingDir project.rootDir
+    doFirst {
+        def imageVersionEnvVar = 'AUTO_SERVICE_IMAGE_VERSION'
+        environment(imageVersionEnvVar, project.version)
+        commandLine 'docker', 'compose', 'up'
+    }
+}
+
+tasks.register('composeDown', Exec) {
+    workingDir project.rootDir
+    doFirst {
+        commandLine 'docker', 'compose', 'down'
+    }
+}
+
+tasks.composeUp.dependsOn tasks.jib
 
 tasks.named('test') {
     useJUnitPlatform()
