@@ -13,8 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import static az.ingress.ingressautoservice.constant.AccountError.ACCOUNT_NOT_FOUND_BY_ID;
-import static az.ingress.ingressautoservice.constant.AccountError.DUPLICATE_CREDENTIALS;
+import static az.ingress.ingressautoservice.constant.error.AccountError.ACCOUNT_NOT_FOUND_BY_ID;
+import static az.ingress.ingressautoservice.constant.error.AccountError.DUPLICATE_CREDENTIALS;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
@@ -24,10 +24,10 @@ public class AccountServiceImpl implements AccountService {
     AccountMapper accountMapper;
 
     @Override
-    public AccountResponseDto create(CreateAccountRequestDto request) {
+    public void create(CreateAccountRequestDto request) {
         ensureDoesNotExistByPhoneNumberOrEmail(request);
         Account account = accountMapper.toEntity(request);
-        return accountMapper.toResponse(accountRepository.save(account));
+        accountRepository.save(account);
     }
 
     @Override

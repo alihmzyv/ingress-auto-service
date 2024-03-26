@@ -4,6 +4,7 @@ import az.ingress.ingressautoservice.dto.ad.AdResponseDto;
 import az.ingress.ingressautoservice.dto.ad.AdShortResponseDto;
 import az.ingress.ingressautoservice.dto.ad.CreateAdRequestDto;
 import az.ingress.ingressautoservice.dto.ad.FindAdsRequestParams;
+import az.ingress.ingressautoservice.entity.Ad;
 import az.ingress.ingressautoservice.exception.NotFoundException;
 import az.ingress.ingressautoservice.mapper.AdMapper;
 import az.ingress.ingressautoservice.repository.AdRepository;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static az.ingress.ingressautoservice.constant.AdError.AD_NOT_FOUND;
+import static az.ingress.ingressautoservice.constant.error.AdError.AD_NOT_FOUND;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
@@ -33,6 +34,21 @@ public class AdServiceImpl implements AdService {
         return adRepository.find(requestParams, pageable);
     }
 
+    @Override
+    public List<AdShortResponseDto> find(Long accountId, Pageable pageable) {
+        return adRepository.find(accountId, pageable);
+    }
+
+    @Override
+    public Long getTotalNumOfPages(FindAdsRequestParams requestParams, Pageable pageable) {
+        return adRepository.getTotalNumOfPages(requestParams, pageable);
+    }
+
+    @Override
+    public Long getTotalNumOfPages(Long accountId, Pageable pageable) {
+        return adRepository.getTotalNumOfPages(accountId, pageable);
+    }
+
     @SneakyThrows
     @Override
     public AdResponseDto findById(Long id) {
@@ -44,6 +60,15 @@ public class AdServiceImpl implements AdService {
     @Override
     public void createAd(Long accountId, CreateAdRequestDto request) {
         accountService.ensureExistsById(accountId);
-        adRepository.save(adMapper.toEntity(request));
+        Ad ad = adMapper.toEntity(accountId, request);
+        adRepository.save(ad);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        int numOfRowsDeleted = adRepository.deleteById(id);
+        if (numOfRowsDeleted == 0) {
+            throw NotFoundException.of(AD_NOT_FOUND.getCode(), AD_NOT_FOUND.buildMessage(id));
+        }
     }
 }

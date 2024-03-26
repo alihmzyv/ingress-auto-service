@@ -3,7 +3,6 @@ spring:
     name: ingress-auto-service
   config:
     import:
-      - classpath:liquibase-properties.yaml
       - classpath:datasource-properties.yaml
       - classpath:hibernate-properties.yaml
       - classpath:security-properties.yaml

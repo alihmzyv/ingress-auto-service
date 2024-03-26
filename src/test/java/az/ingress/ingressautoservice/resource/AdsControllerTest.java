@@ -1,6 +1,6 @@
 package az.ingress.ingressautoservice.resource;
 
-import az.ingress.ingressautoservice.constant.AdError;
+import az.ingress.ingressautoservice.constant.error.AdError;
 import az.ingress.ingressautoservice.exception.NotFoundException;
 import az.ingress.ingressautoservice.service.AdService;
 import org.junit.jupiter.api.Test;

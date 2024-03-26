@@ -1,5 +1,6 @@
 package az.ingress.ingressautoservice.dto.ad;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -21,5 +22,6 @@ public class AdShortResponseDto {
     BigDecimal capacityInLitres;
     Long mileage;
     String cityName;
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     Instant createdAt;
 }

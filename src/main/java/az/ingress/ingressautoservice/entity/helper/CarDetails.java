@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Embeddable
 public class CarDetails {
