@@ -11,7 +11,6 @@ ext {
     dockerRegistryPassword = System.getenv("MS23_DOCKER_REGISTRY_PASSWORD") ?: ')MGrsmJ=Y?s8q^2'
     modelMapperVersion = '3.2.0'
     openApiWebUiVersion = '2.0.2'
-    openApiDataRestVersion = '1.6.15'
 }
 
 def hash = 'git rev-parse --short HEAD'.execute().text.trim()
