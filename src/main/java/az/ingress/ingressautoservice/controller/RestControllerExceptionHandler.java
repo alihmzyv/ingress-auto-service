@@ -1,4 +1,4 @@
-package az.ingress.ingressautoservice.resource;
+package az.ingress.ingressautoservice.controller;
 
 import az.ingress.ingressautoservice.dto.BaseRestApiResponseDto;
 import az.ingress.ingressautoservice.exception.BadRequestException;

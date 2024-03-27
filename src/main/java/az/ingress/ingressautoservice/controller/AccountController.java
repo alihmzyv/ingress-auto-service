@@ -1,10 +1,9 @@
-package az.ingress.ingressautoservice.resource;
+package az.ingress.ingressautoservice.controller;
 
 import az.ingress.ingressautoservice.dto.BaseRestApiResponseDto;
 import az.ingress.ingressautoservice.dto.account.AccountResponseDto;
 import az.ingress.ingressautoservice.dto.account.CreateAccountRequestDto;
 import az.ingress.ingressautoservice.dto.ad.AdShortResponseDto;
-import az.ingress.ingressautoservice.dto.ad.FindAdsRequestParams;
 import az.ingress.ingressautoservice.entity.Ad_;
 import az.ingress.ingressautoservice.service.AccountService;
 import az.ingress.ingressautoservice.service.AdService;
