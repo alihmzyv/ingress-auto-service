@@ -10,6 +10,8 @@ ext {
     dockerRegistryUsername = System.getenv("MS23_DOCKER_REGISTRY_USERNAME") ?: 'alihmzyv@gmail.com'
     dockerRegistryPassword = System.getenv("MS23_DOCKER_REGISTRY_PASSWORD") ?: ')MGrsmJ=Y?s8q^2'
     modelMapperVersion = '3.2.0'
+    openApiWebUiVersion = '2.0.2'
+    openApiDataRestVersion = '1.8.0'
 }
 
 def hash = 'git rev-parse --short HEAD'.execute().text.trim()
@@ -42,7 +44,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openApiWebUiVersion}"
+    implementation "org.springdoc:springdoc-openapi-data-rest:${openApiDataRestVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
