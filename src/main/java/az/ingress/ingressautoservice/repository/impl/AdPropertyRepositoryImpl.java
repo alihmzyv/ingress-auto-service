@@ -22,7 +22,6 @@ public class AdPropertyRepositoryImpl implements AdPropertyRepository {
 
     @Override
     public List<PropertyDto<?, ?>> get(AdProperty adProperty) {
-        //TODO: refactor
         String selectionQuery = getSelectionQuery(adProperty);
         return sessionFactory.fromSession(session -> session.createSelectionQuery(selectionQuery, Tuple.class)
                 .getResultList()
