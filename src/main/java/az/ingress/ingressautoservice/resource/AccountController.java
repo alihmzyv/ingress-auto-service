@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -48,7 +49,7 @@ public class AccountController implements RestApiResponseBuilder {
     //TODO: security not implemented yet
     @GetMapping("/{id}/ads")
     public BaseRestApiResponseDto<List<AdShortResponseDto>> getAds(@PathVariable Long id,
-                                                                   @PageableDefault(
+                                                                   @ParameterObject @PageableDefault(
                                                                            size = 24,
                                                                            sort = Ad_.CREATED_AT,
                                                                            direction = Sort.Direction.DESC)
