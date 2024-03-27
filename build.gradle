@@ -45,7 +45,6 @@ dependencies {
     implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openApiWebUiVersion}"
-    implementation "org.springdoc:springdoc-openapi-data-rest:${openApiDataRestVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
